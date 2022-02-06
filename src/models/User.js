@@ -14,17 +14,35 @@ module.exports = (sequelize) => {
 
       name: {
         type: DataTypes.STRING,
+        allowNull: false
       },
 
       surname: {
         type: DataTypes.STRING,
+        allowNull: false
       },
 
       mail: {
         type: DataTypes.STRING,
-        unique: true
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: { args: true, msg: "ingrese un correo valido" },
+        },
       },
+
+      age:{
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        validate:{
+            isEven(value){
+                if(parseInt(value)%2 !==0){
+                    throw new Error('solo pares permitidos')
+                }
+            }
+        }
+      }
     },
-    { timestamps: true, paranoid: true }
+    { timestamps: true, paranoid: false }
   );
 };

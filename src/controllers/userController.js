@@ -2,7 +2,7 @@ const { User } = require("../db.js");
 const { Op } = require("sequelize");
 
 async function postUser(req, res) {
-  const { name, surname, mail } = req.body;
+  const { name, surname, mail, age } = req.body;
 
   const check = await User.findOne({
     where: {
@@ -16,6 +16,7 @@ async function postUser(req, res) {
       name,
       surname,
       mail,
+      age
     };
 
     try {
