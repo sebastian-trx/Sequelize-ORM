@@ -2,15 +2,15 @@ const { Router } = require("express");
 const router = Router();
 const {
   postPost,
-  // putUser,
-  // deleteUser,
-  // userInfo,
+  putPost,
+  deletePost,
+  postInfo,
  } = require("../controllers/postController.js");
 
 router.post("/", postPost);
-// router.put("/", putUser);
-// router.delete("/", deleteUser);
-// router.get("/", userInfo);
+router.put("/", putPost);
+router.delete("/", deletePost);
+router.get("/", postInfo);
 
 
 

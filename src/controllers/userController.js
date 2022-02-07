@@ -1,4 +1,4 @@
-const { User, Address } = require("../db.js");
+const { User, Address, Post } = require("../db.js");
 const { Op } = require("sequelize");
 const address = require("../models/address.js");
 
@@ -17,7 +17,7 @@ async function postUser(req, res) {
       name,
       surname,
       mail,
-      age
+      age,
     };
 
     try {
@@ -85,23 +85,25 @@ const userInfo = async (req, res) => {
 
   try {
     const allUsers = await User.findAll({
-        //* include: 'address',
-        // mostrar atributos especificos de la relación
-        include:{
-            model:Address,
-            attributes:['street']
+      // include: 'address',
+      // mostrar atributos especificos de la relación
+      include: [
+        {
+          model: Address,
+          attributes: ["street"],
         },
-        // attributos que quero mostrar
-        attributes:['id','name', 'surname']
-    })
-        res.send(allUsers)
+        {
+          model: Post,
+          attributes: ["title", "body"],
+        },
+      ],
+      // attributos que quero mostrar
+      attributes: ["id", "name", "surname"],
+    });
+    res.send(allUsers);
   } catch (error) {
-    console.log(error)  
+    console.log(error);
   }
-  
-
-  
-
 };
 
 module.exports = {

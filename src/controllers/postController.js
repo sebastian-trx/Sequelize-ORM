@@ -31,77 +31,74 @@ async function postPost(req, res) {
   }
 // }
 
-// async function putUser(req, res) {
-//   const { id, name, surname, mail } = req.body;
+async function putPost(req, res) {
+  const { title, body } = req.body;
 
-//   try {
-//     const updateUser = {
-//       name,
-//       surname,
-//       mail,
-//     };
+  try {
+    const updatePost = {
+      title,
+      body
+    };
 
-//     const userById = await User.findByPk(id);
-//     // probar con mail
+    const postById = await Post.findByPk(id);
 
-//     userById
-//       ? res.send(await userById.update(updateUser))
-//       : res.send("No se ha podido actualizar el usuario");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    postById
+      ? res.send(await postById.update(updatePost))
+      : res.send("No se ha podido actualizar el usuario");
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// async function deleteUser(req, res) {
-//   const { id } = req.query;
+async function deletePost(req, res) {
+  const { id } = req.query;
 
-//   try {
-//     const deleteUser = await User.findByPk(id);
+  try {
+    const deletePost = await Post.findByPk(id);
 
-//     deleteUser
-//       ? res.send(await deleteUser.destroy())
-//       : res.json("No se ha podido eliminar el usuario");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    deletePost
+      ? res.send(await deletePost.destroy())
+      : res.json("No se ha podido eliminar el usuario");
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// const userInfo = async (req, res) => {
-//   const { id } = req.query;
+const postInfo = async (req, res) => {
+  const { id } = req.query;
 
-//   if (id) {
-//     try {
-//       const dbUser = await User.findByPk(id);
-//       dbUser
-//         ? res.send({
-//             user: dbUser,
-//           })
-//         : res.send(`No se ha encontrado el usuario con el id: ${id}`);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
+  if (id) {
+    try {
+      const dbPost = await Post.findByPk(id);
+      dbPost
+        ? res.send({
+            post: dbPost,
+          })
+        : res.send(`No se ha encontrado el post con el id: ${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-//   try {
-//     const allUsers = await User.findAll({
-//         //* include: 'address',
-//         // mostrar atributos especificos de la relación
-//         include:{
-//             model:Address,
-//             attributes:['street']
-//         },
-//         // attributos que quero mostrar
-//         attributes:['id','name', 'surname']
-//     })
-//         res.send(allUsers)
-//   } catch (error) {
-//     console.log(error)  
-//   }
-// };
+  try {
+    const allPost = await Post.findAll({
+        // mostrar atributos especificos de la relación
+        include:{
+            model:User,
+            attributes:['name', "surname"]
+        },
+        // attributos que quero mostrar
+        attributes:['id','title', 'body']
+    })
+        res.send(allPost)
+  } catch (error) {
+    console.log(error)  
+  }
+};
 
 module.exports = {
   postPost,
-  // putUser,
-  // deleteUser,
-  // userInfo,
+  putPost,
+  deletePost,
+  postInfo,
 };
