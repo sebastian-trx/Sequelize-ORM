@@ -19,10 +19,12 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const { preloadUser_Band } = require('./src/seeds');
 require('dotenv').config();
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
+  preloadUser_Band()
   server.listen(process.env.PORT || 3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

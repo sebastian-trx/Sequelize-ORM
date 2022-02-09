@@ -1,4 +1,4 @@
-const { User, Address, Post } = require("../db.js");
+const { User, Address, Post, Band } = require("../db.js");
 const { Op } = require("sequelize");
 const address = require("../models/address.js");
 
@@ -95,6 +95,10 @@ const userInfo = async (req, res) => {
         {
           model: Post,
           attributes: ["title", "body"],
+        },
+        {
+          model: Band,
+          attributes: ["name", "year"],
         },
       ],
       // attributos que quero mostrar

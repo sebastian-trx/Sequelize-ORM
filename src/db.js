@@ -55,7 +55,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Address, Post} = sequelize.models;
+const { User, Address, Post, Band} = sequelize.models;
 
 // Aca las relaciones
 
@@ -69,6 +69,10 @@ Address.belongsTo(User)
 User.hasMany(Post)
 Post.belongsTo(User)
 
+// | EL USUARIO PERTENECE A VARIAS BANDAS Y LAS BANDAS TIENEN VARIOS USUARIOS|
+// se crea una tabla intermedia entre uUser y Band
+User.belongsToMany(Band, {through: 'user_band'})
+Band.belongsToMany(User, {through:'user_band'})
 
 
 module.exports = {
